@@ -1,2 +1,3 @@
 # Facebook_friend_recommendation
  The goal of the project is to analyze a modestly large sized graph of about 4000 vertices and 80,000 edges. The graph provided below is from Facebook. It is an undirected graph and has edges between vertices. The vertices represent users, and the edges represent a "friend" relationship. 1) Given a user (that is, vertex), who are the top N closest friends? 2) Given a user, provide a recommendation of M new friends. 3) Output the time (in milliseconds) to complete the operation.
+ Data for the facebook file is provided in the facebook_combined.txt file from https://snap.stanford.edu/data/egonets-Facebook.html site.
