@@ -1,3 +1,5 @@
+/*Summary: Enter in the file path to facebook users and construct graph then have user enter in number 
+representing the facebook users and print out number of friends and close friends*/
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -6,9 +8,9 @@
 using namespace std;
 int main()
 {
+	
 
-
-	ifstream ifs("facebook_combined_list.txt");
+	ifstream ifs("Facebook_combined_list.txt");
 
 	Graph g(false, ifs);
 
@@ -26,7 +28,6 @@ int main()
 	cout << "---------------------------" << endl;
 	cout << "\nTime taken to execute Program: " << elapsed.count() * 1000 << "ms" << endl;
 	cout << "---------------------------" << endl;
-	cin.get();
 	cin.get();
 	return 0;
 }
