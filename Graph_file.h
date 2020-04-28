@@ -47,8 +47,6 @@ public:
 	int getNumVertices() { return vertex_list.size(); }
 	int getNumEdges() { return num_edges; }
 	void printGraph(); // For each vertex, print all the vertices it is connected to
-	//void BFS(int vs); // Visits nodes breadth first
-	//void DFS(int vs); // Visits nodes depth first
 	void friends(int friends);
 	std::vector<int>mutual_friends(std::vector<int> &friend1,std::vector<int> &friend2);
 	std::vector<int>non_mutual(std::vector<int> &friend1,std::vector<int> &friend2);
