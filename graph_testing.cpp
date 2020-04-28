@@ -84,9 +84,10 @@ Graph::Graph(bool insertReverseEdge, ifstream& ifs)
 	string checker = " "; 
 
 	for (string line_in_file; getline(ifs, line_in_file);)
-	{//read text file and store the begin and end points of of the edges
+	{     //read text file and store the begin and end points of of the edges
 		starts = work_around::stoi(line_in_file.substr(0, line_in_file.find(checker)));//start value (vs)
-		ends = work_around::stoi(line_in_file.substr(line_in_file.find(checker) + 1, line_in_file.size()));//finish value (vt)
+		//finish value (vt)
+		ends = work_around::stoi(line_in_file.substr(line_in_file.find(checker) + 1, line_in_file.size()));
 		addEdge(starts, ends);//add the edges
 		num_edges++;//count number of edges
 
@@ -127,25 +128,35 @@ void Graph::friends(int friends_list)//print the contests of the edge list for v
 	{
 		for (auto it : vertex_list)
 		{
-			for (auto edge_iterator : it.second->edge_list)//look through edgelist and print end edge points
+			//look through edgelist and print end edge points
+			for (auto edge_iterator : it.second->edge_list)
+				
 			{
 				if (edge_iterator->target_vertex == friends_list)
 				{
-					friend_list_vector.push_back(it.first);//add friend to list (end point ,but no start point)
+					//add friend to list (end point ,but no start point)
+					friend_list_vector.push_back(it.first);
 				}
 			}
 		}
-		for (auto s : vertex_list[friends_list]->edge_list)//add friends from edge list to friend list
+		   //add friends from edge list to friend list
+		for (auto s : vertex_list[friends_list]->edge_list)
+			
 		{
 			friend_list_vector.push_back(s->target_vertex);
 		}
 
-		
-		for (unsigned int i = 0; i < friend_list_vector.size(); i++)//while looking through friend list
+		    //while looking through friend list
+		for (unsigned int i = 0; i < friend_list_vector.size(); i++)
+			
 		{
-			vector<int> friends_of_friends_container(iterater_friends_of_friends(friend_list_vector[i]));//go through friends of friends list
-			vector<int>find_number_of_mutual_friends(mutual_friends(friend_list_vector, friends_of_friends_container));//find number of mutual friends
-			map_of_mutual_friends.emplace(make_pair(find_number_of_mutual_friends.size(), friend_list_vector[i]));//make pair of friend with number of mutual friends
+			//go through friends of friends list
+			vector<int> friends_of_friends_container(iterater_friends_of_friends(friend_list_vector[i]));
+			//find number of mutual friends
+			vector<int>find_number_of_mutual_friends(mutual_friends(friend_list_vector, friends_of_friends_container));
+			//make pair of friend with number of mutual friends
+			map_of_mutual_friends.emplace(make_pair(find_number_of_mutual_friends.size(), friend_list_vector[i]));
+			
 		}
 
 
@@ -172,7 +183,8 @@ void Graph::friends(int friends_list)//print the contests of the edge list for v
 		if (topN > map_of_mutual_friends.size())
 		{
 			cout << "\n--------------------\n";
-			cout << "The user only has " << map_of_mutual_friends.size() << " top friends. Listing top " << map_of_mutual_friends.size() << " friends." << endl;
+			cout << "The user only has " << map_of_mutual_friends.size() <<
+			" top friends. Listing top " << map_of_mutual_friends.size() << " friends." << endl;
 			cout << "--------------------\n";
 			topN = map_of_mutual_friends.size();
 
@@ -181,10 +193,12 @@ void Graph::friends(int friends_list)//print the contests of the edge list for v
 		std::cout << "Top " << topN << " friends of user: " << endl;
 
 		std::multimap<int, int>::reverse_iterator rank_best_friends;//rank closest friends
-		for (rank_best_friends = map_of_mutual_friends.rbegin(); rank_best_friends != map_of_mutual_friends.rend(); ++rank_best_friends)
+		for (rank_best_friends = map_of_mutual_friends.rbegin(); 
+		   rank_best_friends != map_of_mutual_friends.rend(); ++rank_best_friends)
 		{//prints closest friends in descending order
-			if (num_list < topN) {
-				std::cout << "  #" << num_list + 1 << " - " << rank_best_friends->second << " with " << rank_best_friends->first << " mutual friends" << endl;
+			if (num_list < topN) 
+			{
+			  std::cout << "  #" << num_list + 1 << " - " << rank_best_friends->second << " with " << rank_best_friends->first << " mutual friends" << endl;
 				num_list++;
 			}
 			
@@ -207,25 +221,26 @@ void Graph::friends(int friends_list)//print the contests of the edge list for v
 		}
 
 		vector<int> recommendThese;
-
-		int random_num = (rand() % mutual_friend_recommendation.size()); // generate random number to pick random mutual friend from friend list.
-
-		int random_friend = mutual_friend_recommendation[random_num]; //The actual user which got randomly selected
-
+              //generate random number to pick random mutual friend from friend list.
+		int random_num = (rand() % mutual_friend_recommendation.size()); 
+		//The actual user which got randomly selected
+		
+		int random_friend = mutual_friend_recommendation[random_num]; 
+		
 		//cout << "\nChose: " << random_friend << " as user to get suggestions from" << endl;
 
 		vector<int>particularFriendList;
 
 		for (auto particular_friend_iterator : vertex_list[random_friend]->edge_list)
 		{
-			particularFriendList.push_back(particular_friend_iterator->target_vertex);
+		    particularFriendList.push_back(particular_friend_iterator->target_vertex);
 		}
 
 		//cout << "THIS SIZE: " << particularFriendList.size() << endl;
-
-		recommendThese  = non_mutual(friend_list_vector, particularFriendList); //find non-mutual friends between the current person and their randomly selected friend
 		
-//TIMING END "FRIEND RECOMMENDATION LIST"
+	    recommendThese  = non_mutual(friend_list_vector, particularFriendList); //find non-mutual friends between the current person and their randomly selected friend
+		
+           //TIMING END "FRIEND RECOMMENDATION LIST"
 		auto finishedRecom = std::chrono::high_resolution_clock::now();
 		chrono::duration<double> elapsedRecom = finishedRecom - startRecom;
 		//cout << "Time taken to execute Find Suggestions Command: " << elapsedRecom.count()*1000 << "ms" << endl << endl;
@@ -292,12 +307,12 @@ void Graph::print_friend(vector<int>&mutual_friend_results)//shows which person 
 	
 	for (unsigned int i = 0; i < mutual_friend_results.size(); i++)
 	{
-		cout << mutual_friend_results[i] << " is a mutual friend " << endl;
+	    cout << mutual_friend_results[i] << " is a mutual friend " << endl;
 
 	}
 }
 vector<int>Graph::mutual_friends(vector<int> &friend1, vector<int> &friend2)
-{//function returns vector containing mutual friends
+{     //function returns vector containing mutual friends
 	vector<int>common_friends;
 	std::sort(std::execution::par_unseq,friend1.begin(), friend1.end());
 	std::sort(std::execution::par_unseq,friend2.begin(), friend2.end());
@@ -306,8 +321,8 @@ vector<int>Graph::mutual_friends(vector<int> &friend1, vector<int> &friend2)
 }
 
 vector<int>Graph::non_mutual(vector<int> &friend1, vector<int> &friend2)
-{
-	vector<int>uncommon_friends;
+{       
+	std::vector<int>uncommon_friends;
 	std::sort(std::execution::par_unseq, friend1.begin(), friend1.end());
 	std::sort(std::execution::par_unseq, friend2.begin(), friend2.end());
 	set_difference(friend1.begin(), friend1.end(), friend2.begin(), friend2.end(), back_inserter(uncommon_friends));
