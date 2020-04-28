@@ -5,11 +5,9 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-#include <queue>
 #include <cstdlib>
 #include <cerrno>
 #include <string>
-#include <stack>
 #include <algorithm>
 #include <utility>
 #include <functional>
